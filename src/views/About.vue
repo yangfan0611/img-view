@@ -1,5 +1,23 @@
 <template>
   <div class="about">
-    <h1>This is an about page</h1>
+    <detail></detail>
   </div>
 </template>
+
+<script>
+import detail from '@/components/about/detail'
+export default {
+  components: {
+    detail
+  },
+  data () {
+    return {
+
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+
+</style>

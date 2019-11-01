@@ -16,7 +16,7 @@ protocol.registerSchemesAsPrivileged([{scheme: 'app', privileges: { secure: true
 
 function createWindow () {
   // Create the browser window.
-  win = new BrowserWindow({ width: 1200, height: 620, webPreferences: {
+  win = new BrowserWindow({ width: 1000, height: 620, webPreferences: {
     webSecurity: false,
     nodeIntegration: true
   } })
@@ -76,6 +76,17 @@ app.on('activate', () => {
     createWindow()
   }
 })
+
+app.setUserTasks([
+  {
+    program: process.execPath,
+    arguments: '--new-window',
+    iconPath: process.execPath,
+    iconIndex: 0,
+    title: 'New Window',
+    description: 'Create a new window'
+  }
+])
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.

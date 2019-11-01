@@ -117,7 +117,7 @@ export default {
         height: 448px;
         transition: 0.3s;
         &:hover {
-          transform: scale(0.96);
+          transform: scale(0.97);
           transition: 0.3s;
         }
         img {

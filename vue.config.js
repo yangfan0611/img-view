@@ -3,7 +3,7 @@ module.exports = {
     port: 8099,
     proxy: {
       '/': {
-        target: 'http://test.idata3d.com:9090', // 请求ip
+        target: '', // 请求ip
         ws: false,
         changeOrigin: true
       }

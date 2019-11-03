@@ -1,86 +1,30 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <el-container class="content">
-        <el-aside width="200px">
-          <div class="user-info">
-            <dl>
-              <dt>
-                <img src="../src/assets/img-icon/school.jpg" alt="">
-              </dt>
-              <p>
-                <span>中国科学技术大学</span>
-              </p>
-            </dl>
-          </div>
-          <el-menu
-            default-active="1"
-            class="el-menu-vertical-demo"
-            @open="handleOpen"
-            @close="handleClose"
-            background-color="#545c64"
-            text-color="#fff"
-            active-text-color="#ffd04b">
-            <el-menu-item index="1">
-              <i class="el-icon-location"></i>
-              <router-link to="/" slot="title">
-                <span>首页</span>
-              </router-link>
-            </el-menu-item>
-            <el-menu-item index="2">
-              <i class="el-icon-menu"></i>
-              <router-link to="/about" slot="title">
-                <span>关于</span>
-              </router-link>
-            </el-menu-item>
-            <el-menu-item index="3">
-              <i class="el-icon-document"></i>
-              <router-link to="/info" slot="title">
-                <span>信息</span>
-              </router-link>
-            </el-menu-item>
-            <el-menu-item index="4">
-              <i class="el-icon-setting"></i>
-              <router-link slot="title" to="/user">
-                <span>导航四</span>
-              </router-link>
-            </el-menu-item>
-            <el-menu-item index="5">
-              <i class="el-icon-setting"></i>
-              <span slot="title">导航五</span>
-            </el-menu-item>
-            <el-menu-item index="6">
-              <i class="el-icon-setting"></i>
-              <span slot="title">导航六</span>
-            </el-menu-item>
-            <el-menu-item index="7">
-              <i class="el-icon-setting"></i>
-              <span slot="title">导航七</span>
-            </el-menu-item>
-          </el-menu>
-        </el-aside>
-        <el-container>
-          <el-header style="text-align: right; font-size: 12px">
-            <el-dropdown>
-            <i class="el-icon-setting" style="margin-right: 15px"></i>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>个人中心</el-dropdown-item>
-              <el-dropdown-item>关于我的</el-dropdown-item>
-              <el-dropdown-item>退出登录</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
-          <div class="block"><el-avatar :size="25" :src="circleUrl"></el-avatar></div>
-          <span class="user-name">辉老狗</span>
-          </el-header>
-          <el-container>
-            <el-main>
-              <router-view/>
-            </el-main>
-            <el-footer>Footer</el-footer>
-          </el-container>
-        </el-container>
-      </el-container>
+    <div class="index-header">
+      <div class="header-left"></div>
+      <div class="header-nav">
+        <ul class="nav-tab">
+          <li class="nav-item" v-for="(item, index) in navList" :key="index" :class="{active: item.url == ins}">
+            <router-link :to="item.url">
+              <span>{{ item.name }}</span>
+            </router-link>
+          </li>
+        </ul>
+      </div>
+      <div class="header-right">
+        <el-dropdown>
+          <i class="el-icon-setting" style="margin-right: 15px"></i>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item>查看</el-dropdown-item>
+            <el-dropdown-item>新增</el-dropdown-item>
+            <el-dropdown-item>删除</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+        <div class="block"><el-avatar :size="25" :src="circleUrl"></el-avatar></div>
+        <span class="header-name">辉老狗</span>
+      </div>
     </div>
+    <router-view/>
   </div>
 </template>
 
@@ -88,130 +32,116 @@
 export default {
   data () {
     return {
-      menuList: [
+      navList: [
         {
           name: '首页',
           url: '/',
-          icon: 'el-icon-location',
           id: 1
         },
         {
           name: '关于',
-          url: 'about',
-          icon: 'el-icon-menu',
+          url: '/about',
           id: 2
         },
         {
           name: '内容',
-          url: '/',
-          icon: 'el-icon-setting',
+          url: '/info',
           id: 3
         },
         {
           name: '我的',
-          url: '/',
-          icon: 'el-icon-location',
+          url: '/user',
           id: 4
         },
         {
           name: '详情',
-          url: '/',
-          icon: 'el-icon-location',
+          url: '/dd',
           id: 5
         }
       ],
-      circleUrl: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'
+      circleUrl: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
+      ins: ''
     }
   },
   methods: {
-    handleOpen(key, keyPath) {
-      console.log(key, keyPath);
-    },
-    handleClose(key, keyPath) {
-      console.log(key, keyPath);
+    rePath (url) {
+      let arr = url.split('/')
+      this.ins = '/' + arr[1]
+    }
+  },
+  created () {
+  },
+  watch: {
+    $route (to, from) {
+      this.rePath(to.path)
+      // this.ins = to.path
     }
   }
 }
 </script>
 
 <style lang="scss">
-#nav {
-  height: 100vh;
-  /deep/ .user-info {
-    // width: 100%;
-    height: 150px;
-    background-color: rgb(84, 92, 100);
-    dl {
-      text-align: center;
-      dt {
-        display: flex;
-        justify-content: center;
-        img {
-          width: 80px;
-          height: 80px;
+ul {
+  padding: 0;
+  li {
+    list-style: none;
+  }
+}
+a {
+  text-decoration: none;
+}
+.index-header {
+  width: 100%;
+  height: 60px;
+  background-color: #e3e3e3;
+  display: flex;
+  .header-left {
+    width: 250px;
+    border-right: 1px solid #333;
+  }
+  .header-nav {
+    flex: 1;
+    .nav-tab {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      .nav-item {
+        a {
+          span {
+            color: #333;
+          }
         }
-      }
-      p {
-        text-align: center;
-      }
-    }
-  }
-  /deep/ .el-header {
-    background-color: #e3e3e3;
-  }
-  .content {
-    height: 100%;
-  }
-  /deep/ .el-container {
-    .el-header {
-      background-color: #B3C0D1;
-      color: #333;
-      line-height: 60px;
-      cursor: pointer;
-      .block {
-        display: inline-block;
-        span {
-          vertical-align: middle;
+        position: relative;
+        &::before {
+          content: '';
+          display: block;
+          width: 1px;
+          height: 16px;
+          margin-top: -8px;
+          background-color: #ccc;
+          position: absolute;
+          left: -48px;
+          top: 50%;
         }
-      }
-      .user-name {
-        margin-left: 6px;
-      }
-    }
-    .el-main {
-      padding: 0;
-    }
-    .el-aside {
-      background-color: rgb(84, 92, 100);
-      .el-menu {
-        height: 100%;
-        .el-menu-item {
+        &.active {
           a {
-            text-decoration: none;
             span {
-              font-size: 14px;
-              color: rgb(255, 255, 255);
-            }
-          }
-          &.is-active {
-            a span {
-              color: rgb(255, 208, 75);
+              color: #ff3c54;
             }
           }
         }
       }
     }
-    .el-footer {
-      background-color: #cdcdcd;
+  }
+  .header-right {
+    width: 180px;
+    border-left: 1px solid #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .header-name {
+      margin-left: 7px;
     }
   }
-  // a {
-  //   font-weight: bold;
-  //   color: #2c3e50;
-
-  //   &.router-link-exact-active {
-  //     color: #42b983;
-  //   }
-  // }
 }
 </style>

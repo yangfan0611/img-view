@@ -3,7 +3,7 @@ module.exports = {
     port: 8099,
     proxy: {
       '/': {
-        target: '', // 请求ip
+        target: 'https://easydoc.xyz/', // 请求ip
         ws: false,
         changeOrigin: true
       }
